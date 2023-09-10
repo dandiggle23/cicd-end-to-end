@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout'){
            steps {
                 git credentialsId: 'de9d0194-4388-4f9a-8863-ae503605aa6f', 
-                url: 'https://github.dandiggle23/cicd-end-to-end',
+                url: 'https://github.com/dandiggle23/cicd-end-to-end',
                 branch: 'main'
            }
         }
