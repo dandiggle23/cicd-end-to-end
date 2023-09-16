@@ -27,15 +27,9 @@ pipeline {
             }
         }
 
-        stage('Push the artifacts'){
-           steps{
-                script{
-                    sh '''
-                    echo 'Push to Repo'
-                    docker push dante9623/cicd-e2e:${BUILD_NUMBER}
-                    '''
-                }
-            }
+        stage('push image') {
+               withdockerregistry([ credentialsid: "b6582731-a465-4ea5-918f-ab32ab2d19b3", url: "https://index.docker.io/v1/" ]) {
+               bat "dante9623/cicd-e2e:${BUILD_NUMBER}"
         }
         
         
