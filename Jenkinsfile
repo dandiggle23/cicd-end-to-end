@@ -29,15 +29,15 @@ pipeline {
 
         stage('Push the artifacts'){
            steps{
-               script {
-                withdockerregistry([ credentialsid: "b6582731-a465-4ea5-918f-ab32ab2d19b3", url: "https://index.docker.io/v1/" ]){            
-                bat "docker push dante9623/cicd-e2e:${BUILD_NUMBER}"
-   
-             }
-          } 
-              
+                script{
+                    sh '''
+                    echo 'Push to Repo'
+                    docker push dante9623/cicd-e2e:${BUILD_NUMBER}
+                    '''
+                }
             }
         }
+        
         
         stage('Checkout K8S manifest SCM'){
             steps {
