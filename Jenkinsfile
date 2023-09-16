@@ -10,7 +10,7 @@ pipeline {
         
         stage('Checkout'){
            steps {
-                git credentialsId: 'de9d0194-4388-4f9a-8863-ae503605aa6f', 
+                git credentialsId: '65803886-a586-414a-9707-046b576d66db', 
                 url: 'https://github.com/dandiggle23/cicd-end-to-end',
                 branch: 'main'
            }
@@ -40,8 +40,8 @@ pipeline {
         
         stage('Checkout K8S manifest SCM'){
             steps {
-                git credentialsId: 'de9d0194-4388-4f9a-8863-ae503605aa6f', 
-                url: 'https://github.com/dandiggle23/cicd-end-to-end',
+                git credentialsId: '65803886-a586-414a-9707-046b576d66db', 
+                url: 'https://github.com/dandiggle23/cicd-manifest-repo.git',
                 branch: 'main'
             }
         }
@@ -49,7 +49,7 @@ pipeline {
         stage('Update K8S manifest & push to Repo'){
             steps {
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'de9d0194-4388-4f9a-8863-ae503605aa6f', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: '65803886-a586-414a-9707-046b576d66db', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh '''
                         cat deploy.yaml
                         sed -i '' "s/32/${BUILD_NUMBER}/g" deploy.yaml
@@ -57,7 +57,7 @@ pipeline {
                         git add deploy.yaml
                         git commit -m 'Updated the deploy yaml | Jenkins Pipeline'
                         git remote -v
-                        git push https://github.com/dandiggle23/cicd-end-to-end.git HEAD:main
+                        git push https://github.com/dandiggle23/cicd-manifest-repo.git HEAD:main
                         '''                        
                     }
                 }
