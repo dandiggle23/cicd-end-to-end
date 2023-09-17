@@ -30,9 +30,9 @@ pipeline {
 
         stage('push image') {
             steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 echo 'Login completed'
-                sh ' sudo docker push dante9623/icd-e2e:${BUILD_NUMBER}'
+                sh ' docker push dante9623/icd-e2e:${BUILD_NUMBER}'
                 echo 'Push Image succeeded'
         
             }  
