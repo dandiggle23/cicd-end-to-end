@@ -4,7 +4,7 @@ pipeline {
     
     environment {
         IMAGE_TAG = "${BUILD_NUMBER}"
-        DOCKERHUB_CREDENTIALS = credentials('dockerhubcredentials')
+        DOCKERHUB_CREDENTIALS = credentials('dante9623-dockerhub')
     }
     
     stages {
