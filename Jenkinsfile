@@ -4,6 +4,7 @@ pipeline {
     
     environment {
         IMAGE_TAG = "${BUILD_NUMBER}"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhubcredentials')
     }
     
     stages {
@@ -28,11 +29,14 @@ pipeline {
         }
 
         stage('push image') {
-               withdockerregistry([ credentialsid: "b6582731-a465-4ea5-918f-ab32ab2d19b3", url: "https://index.docker.io/v1/" ]) {
-               bat "dante9623/cicd-e2e:${BUILD_NUMBER}"
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                echo 'Login completed'
+                sh ' sudo docker push dante9623/icd-e2e:${BUILD_NUMBER}'
+                echo 'Push Image succeeded'
+        
+            }  
         }
-        
-        
         stage('Checkout K8S manifest SCM'){
             steps {
                 git credentialsId: '65803886-a586-414a-9707-046b576d66db', 
@@ -59,5 +63,4 @@ pipeline {
             }
         }
     }
-}
 }
